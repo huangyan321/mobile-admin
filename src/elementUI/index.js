@@ -29,8 +29,8 @@ import { Breadcrumb,
   Tag,
   Tree,
   Loading,
-  // MessageBox,
-  // Message,
+  MessageBox,
+  Message,
   Notification,
   Dialog,
   Card,
@@ -41,8 +41,6 @@ import { Breadcrumb,
   TabPane,
   Step,
   Steps,
-  Divider,
-  DatePicker
 } from "element-ui"
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
@@ -83,12 +81,10 @@ Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Step)
 Vue.use(Steps)
-Vue.use(Divider)
-Vue.use(DatePicker)
 Vue.prototype.$loading = Loading.service;
-// Vue.prototype.$msgbox = MessageBox;
-// Vue.prototype.$alert = MessageBox.alert;
-// Vue.prototype.$confirm = MessageBox.confirm;
-// Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
-// Vue.prototype.$message = Message;
+Vue.prototype.$message = Message;

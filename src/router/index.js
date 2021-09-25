@@ -30,11 +30,19 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRouterMap = [{
+export const constantRoutes = [
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
+
   {
     path: '/',
     component: Layout,
@@ -43,33 +51,134 @@ export const constantRouterMap = [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: '仪表盘',
-        icon: 'dashboard'
-      }
+      meta: { title: '仪表盘', icon: 'dashboard' }
     }]
   },
-]
-export const asyncRouterMap = [
+
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/userlist',
+    name: 'user',
+    meta: { title: '用户管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'userList',
+        name: 'UserList',
+        component: () => import('@/views/user/'),
+        meta: { title: '用户列表', icon: 'table' }
+      },
+    ]
+  },
+
+  {
+    path: '/rights',
+    component: Layout,
+    redirect: '/rights/rolesList',
+    name: 'rights',
+    meta: { title: '权限管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'rolesList',
+        name: 'Role',
+        component: () => import('@/views/rights/rolesList'),
+        meta: { title: '角色列表', icon: 'form' }
+      },
+      {
+        path: 'rightsList',
+        name: 'Right',
+        component: () => import('@/views/rights/rightsList'),
+        meta: { title: '权限列表', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/goodsManage',
+    component: Layout,
+    redirect: '/goodsManage/goods',
+    name: 'goodsManage',
+    meta: { title: '商品管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'goods',
+        name: 'Goods',
+        component: () => import('@/views/goodsManage/goods'),
+        meta: { title: '商品列表', icon: 'form' }
+      },
+      {
+        path: 'params',
+        name: 'Params',
+        component: () => import('@/views/goodsManage/params'),
+        meta: { title: '分类参数', icon: 'form' }
+      },
+      {
+        path: 'categories',
+        name: 'Categories',
+        component: () => import('@/views/goodsManage/categories'),
+        meta: { title: '商品分类', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/goods',
+    component: Layout,
+    redirect: '/goods/add',
+    name: 'goods',
+    children: [{
+      path: 'add',
+      name: 'add',
+      component: () => import('@/views/goodsManage/goods/addGoods/Add'),
+    }]
+  },
+  {
+    path: '/orderManage',
+    component: Layout,
+    redirect: '/orderManage/orderList',
+    name: 'goodsManage',
+    meta: { title: '订单管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'orderList',
+        name: 'OrderList',
+        component: () => import('@/views/orderManage/orderList'),
+        meta: { title: '订单列表', icon: 'form' }
+      },
+    ]
+  },
+  {
+    path: '/reports',
+    component: Layout,
+    redirect: '/reports/report',
+    name: 'report',
+    meta: { title: '数据报表', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'report',
+        name: 'report',
+        component: () => import('@/views/report'),
+        meta: { title: '数据报表', icon: 'form' }
+      },
+    ]
+  },
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'http://shop.hgyn23.cn/',
+        meta: { title: '外部链接', icon: 'link' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  },
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({
-    y: 0
-  }),
-  routes: constantRouterMap
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
 const router = createRouter()

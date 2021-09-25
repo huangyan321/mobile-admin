@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+  // MessageBox,
   Message
 } from 'element-ui'
 import store from '@/store'
@@ -14,8 +15,7 @@ import NProgress from 'nprogress' // progress bar
 const service = axios.create({
   baseURL: getDomain(), // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000, // request timeout
-  
+  timeout: 5000 // request timeout
 })
 
 // request interceptor
@@ -28,8 +28,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = getToken();
-      
+      config.headers['Authorization'] = getToken()
     }
     return config
   },

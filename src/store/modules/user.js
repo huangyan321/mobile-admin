@@ -1,25 +1,18 @@
-
-import {
-  Message
-} from 'element-ui'
+import { login, getInfo } from '@/api/login'
 import {
   getToken,
   setToken,
   removeToken,
   getRoleId,
-  setRoleId
 } from '@/utils/auth'
-import {
-  resetRouter
-} from '@/router'
+import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     roleId: getRoleId(),
     name: '',
-    avatar: '',
-    classes: [],
+    avatar: ''
   }
 }
 
@@ -40,16 +33,66 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
-  SET_CLASSES: (state, classes) => {
-    state.classes = classes.split(';')
-  },
-  SET_CLASSES1: (state, classes) => {
-    state.classes = classes
   }
 }
 
 const actions = {
+  // user login
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      login({ username: username.trim(), password: password }).then(response => {
+        const { data } = response;
+        commit('SET_TOKEN', data.token);
+        commit('SET_ID', data.id);
+        setToken(data.token);
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // get user info
+  getInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getInfo(state.roleId).then(response => {
+        const { data } = response
+        if (!data) {
+          return reject('Verification failed, please Login again.')
+        }
+        const {
+          username,
+          role_id
+        } = data
+
+        commit('SET_NAME', username)
+        commit('SET_AVATAR', role_id)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // user logout
+  logout({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      removeToken() // must remove  token  first
+      resetRouter()
+      commit('RESET_STATE')
+      resolve()
+    })
+  },
+
+  // remove token
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      removeToken() // must remove  token  first
+      commit('RESET_STATE')
+      resolve()
+    })
+  }
 }
 
 export default {
@@ -58,3 +101,4 @@ export default {
   mutations,
   actions
 }
+

@@ -1,11 +1,5 @@
 <template>
   <div class="login-container">
-    <figure class="container">
-        <div class="sun"></div>
-        <div class="earth">
-          <div class="moon"></div>
-        </div>
-      </figure>
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -15,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login</h3>
+        <h3 class="title">登 录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -54,33 +48,27 @@
           />
         </span>
       </el-form-item>
-
       <el-row class="login_btn">
         <el-button
           :loading="loading"
           type="primary"
           style="margin-bottom: 30px"
           @click.native.prevent="handleLogin"
-          >登录</el-button
-        >
-        <el-button
-          type="info"
-          style="margin-bottom: 30px"
-          @click="loginFormReset"
-          >重置</el-button
-        >
+        >登录</el-button>
+        <el-button type="info" style="margin-bottom: 30px" @click="loginFormReset">重置</el-button>
       </el-row>
-     
+
       <div class="tips">
         <span style="margin-right: 20px">username: admin</span>
         <span> password: 123456</span>
       </div>
     </el-form>
-     
     <div class="footer">
-      <a href="http://beian.miit.gov.cn/" target="_blank" style="color: #a6a9ad"
-        >闽ICP备2021008516号-1</a
-      >
+      <a
+        href="http://beian.miit.gov.cn/"
+        target="_blank"
+        style="color: #a6a9ad"
+      >闽ICP备2021008516号-1</a>
     </div>
   </div>
 </template>
@@ -98,8 +86,8 @@ export default {
       //   callback();
       // }
       if (value.trim().length === 0) {
-        callback(new Error("请输入你的大名"));
-      } else callback();
+        callback(new Error("请输入你的大名"))
+      } else (callback())
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -110,9 +98,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "",
-        password: "",
-        type: 1,
+        username: "admin",
+        password: "123456",
       },
       loginRules: {
         username: [
@@ -129,7 +116,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
@@ -137,7 +124,7 @@ export default {
   },
   methods: {
     loginFormReset() {
-      this.$refs.loginForm.resetFields();
+      this.$refs.loginForm.resetFields()
     },
     showPwd() {
       if (this.passwordType === "password") {
@@ -150,7 +137,23 @@ export default {
       });
     },
     handleLogin() {
-      this.$router.push('/dashboard')
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
   },
 };
@@ -163,7 +166,7 @@ export default {
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
-@import url("~@/styles/simulation.css");
+
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;

@@ -1,23 +1,56 @@
 import request from '@/utils/request'
-//根据用户类型进行用户信息获取(分页获取总数量与数据)
-export function getUsersByTypePage(params) {
+
+export function fetchUserList(params) {
   return request({
-    url: '/admin/getUsersByTypePage',
+    url: '/users',
     method: 'get',
     params
   })
 }
-export function delUserData(params) {
+export function fetchUserPageList(id,mg_state) {
   return request({
-    url: '/users/delUserdata',
-    method: 'get',
-    params
+    url: `/users/${id}/state/${mg_state}`,
+    method: 'put',
   })
 }
-export function upDataUserInfo(data) {
+export function addUser(data) {
   return request({
-    url: '/users/upDataUserInfo',
+    url: `/users`,
     method: 'post',
     data
+  })
+}
+export function getThisUserInfo(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'get',
+  })
+}
+export function saveUserInfo(id,data) {
+  return request({
+    url: `/users/${id}`,
+    method: 'put',
+    data: data
+  })
+}
+export function deleteThisUserInfo(id) {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete',
+  })
+}
+export function getAllRolesList(id,data) {
+  return request({
+    url: `/roles`,
+    method: 'get',
+  })
+}
+export function rolesAssign(id,rid) {
+  return request({
+    url: `/users/${id}/role`,
+    method: 'put',
+    data: {
+      rid: rid
+    }
   })
 }
