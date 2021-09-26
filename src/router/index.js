@@ -66,7 +66,7 @@ export const constantRoutes = [{
     },
     children: [{
         path: 'list',
-        name: 'List',
+        name: 'categoryList',
         component: () => import('@/views/category/List'),
         meta: {
           title: '分类列表',
@@ -74,7 +74,7 @@ export const constantRoutes = [{
         }
       }, {
         path: 'edit',
-        name: 'Edit',
+        name: 'categoryCreate',
         component: () => import('@/views/category/CategoryEdit'),
         meta: {
           title: '创建分类',
@@ -83,7 +83,7 @@ export const constantRoutes = [{
       },
       {
         path: 'edit/:id',
-        name: 'Edit',
+        name: 'categoryEdit',
         component: () => import('@/views/category/CategoryEdit'),
         props: true,
       }
@@ -99,7 +99,7 @@ export const constantRoutes = [{
     },
     children: [{
         path: 'list',
-        name: 'List',
+        name: 'itemList',
         component: () => import('@/views/item/List'),
         meta: {
           title: '物品列表',
@@ -107,7 +107,7 @@ export const constantRoutes = [{
         }
       }, {
         path: 'edit',
-        name: 'Edit',
+        name: 'itemCreate',
         component: () => import('@/views/item/ItemEdit'),
         meta: {
           title: '创建物品',
@@ -116,7 +116,7 @@ export const constantRoutes = [{
       },
       {
         path: 'edit/:id',
-        name: 'Edit',
+        name: 'itemEdit',
         component: () => import('@/views/item/ItemEdit'),
         props: true,
       }
@@ -132,7 +132,7 @@ export const constantRoutes = [{
     },
     children: [{
         path: 'list',
-        name: 'List',
+        name: 'heroList',
         component: () => import('@/views/hero/List'),
         meta: {
           title: '英雄列表',
@@ -140,7 +140,7 @@ export const constantRoutes = [{
         }
       }, {
         path: 'edit',
-        name: 'Edit',
+        name: 'heroCreate',
         component: () => import('@/views/hero/HeroEdit'),
         meta: {
           title: '创建英雄',
@@ -149,7 +149,7 @@ export const constantRoutes = [{
       },
       {
         path: 'edit/:id',
-        name: 'Edit',
+        name: 'heroEdit',
         component: () => import('@/views/hero/HeroEdit'),
         props: true,
       }
@@ -172,7 +172,6 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
-
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
