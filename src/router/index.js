@@ -61,7 +61,7 @@ export const constantRoutes = [{
     component: Layout,
     redirect: '/category/list',
     meta: {
-      title: "内容管理",
+      title: "分类管理",
       icon: 'form'
     },
     children: [{
@@ -118,6 +118,39 @@ export const constantRoutes = [{
         path: 'edit/:id',
         name: 'Edit',
         component: () => import('@/views/item/ItemEdit'),
+        props: true,
+      }
+    ]
+  },
+  {
+    path: '/hero',
+    component: Layout,
+    redirect: '/hero/list',
+    meta: {
+      title: "英雄管理",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/hero/List'),
+        meta: {
+          title: '英雄列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'Edit',
+        component: () => import('@/views/hero/HeroEdit'),
+        meta: {
+          title: '创建英雄',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        component: () => import('@/views/hero/HeroEdit'),
         props: true,
       }
     ]
