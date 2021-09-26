@@ -30,8 +30,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
+export const constantRoutes = [{
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -51,16 +50,91 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '仪表盘', icon: 'dashboard' }
+      meta: {
+        title: '仪表盘',
+        icon: 'dashboard'
+      }
     }]
   },
+  {
+    path: '/category',
+    component: Layout,
+    redirect: '/category/list',
+    meta: {
+      title: "内容管理",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/category/List'),
+        meta: {
+          title: '分类列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'Edit',
+        component: () => import('@/views/category/CategoryEdit'),
+        meta: {
+          title: '创建分类',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        component: () => import('@/views/category/CategoryEdit'),
+        props: true,
+      }
+    ]
+  },
+  {
+    path: '/item',
+    component: Layout,
+    redirect: '/item/list',
+    meta: {
+      title: "物品管理",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/item/List'),
+        meta: {
+          title: '物品列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'Edit',
+        component: () => import('@/views/item/ItemEdit'),
+        meta: {
+          title: '创建物品',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        component: () => import('@/views/item/ItemEdit'),
+        props: true,
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRoutes
 })
 
