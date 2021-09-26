@@ -52,7 +52,7 @@ export default {
       parentsList: [],
       categoryInfo: {
         name: "",
-        parent: "",
+
       },
       rules: {
         name: [
