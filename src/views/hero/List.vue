@@ -4,7 +4,7 @@
     <template>
       <el-table :data="heroList" style="width: 100%" stripe border>
         <el-table-column label="序号" prop="_id" />
-        <el-table-column label="物品图标">
+        <el-table-column label="英雄头像">
         <template slot-scope="scope">
           <div >
             <img
@@ -15,7 +15,7 @@
           </div>
         </template>
         </el-table-column>
-        <el-table-column label="物品名称" prop="name" />
+        <el-table-column label="英雄名称" prop="name" />
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
