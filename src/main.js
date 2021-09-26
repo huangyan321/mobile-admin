@@ -10,6 +10,8 @@ import store from './store'
 import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
+import request from '@/utils/request'
+Vue.prototype.$http = request
 // 在页面刷新时将store中的数据保存到sessionStorage中
 window.addEventListener("beforeunload",() => {
   const userInfo = {

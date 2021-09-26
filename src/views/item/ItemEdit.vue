@@ -7,6 +7,17 @@
       <el-form-item label="物品名称" prop="name">
         <el-input v-model="itemInfo.name"> </el-input>
       </el-form-item>
+      <el-form-item label="物品图标">
+        <el-upload
+          class="avatar-uploader"
+          :action="$http.defaults.baseURL + '/upload'"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+        >
+          <img v-if="itemInfo.icon" :src="itemInfo.icon" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
@@ -21,12 +32,7 @@
   </div>
 </template>
 <script>
-import {
-  getItemList,
-  addItem,
-  getOneItem,
-  editOneItem,
-} from "@/api/item";
+import { getItemList, addItem, getOneItem, editOneItem } from "@/api/item";
 export default {
   props: {
     id: {
@@ -80,12 +86,34 @@ export default {
       let res = await getOneItem(this.id);
       this.itemInfo = res;
     },
-    // async getList() {
-    //   let res = await getItemList();
-    //   this.itemInfo = res;
-    // },
+    handleAvatarSuccess(res) {
+      this.$set(this.itemInfo,icon,res.url)
+    }
   },
 };
 </script>
-<style lang="scss" scoped>
+<style >
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
