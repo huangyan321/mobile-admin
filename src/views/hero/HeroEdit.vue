@@ -11,9 +11,63 @@
         <el-input v-model="heroInfo.title"> </el-input>
       </el-form-item>
       <el-form-item label="职业" prop="name">
-        <el-select v-model="heroInfo.categories" multiple placeholder="请选择">
+        <el-select
+          v-model="heroInfo.categories"
+          multiple
+          placeholder="请选择职业"
+        >
           <el-option
             v-for="item in occupationList"
+            :key="item._id"
+            :label="item.name"
+            :value="item._id"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="难度" prop="scores.difficulty">
+        <div class="block">
+          <el-rate v-model="heroInfo.scores.difficulty"></el-rate>
+        </div>
+      </el-form-item>
+      <el-form-item label="技巧" prop="scores.skills">
+        <div class="block">
+          <el-rate v-model="heroInfo.scores.skills"></el-rate>
+        </div>
+      </el-form-item>
+      <el-form-item label="攻击" prop="scores.attack">
+        <div class="block">
+          <el-rate v-model="heroInfo.scores.attack"></el-rate>
+        </div>
+      </el-form-item>
+      <el-form-item label="生存" prop="scores.survive">
+        <div class="block">
+          <el-rate v-model="heroInfo.scores.survive"></el-rate>
+        </div>
+      </el-form-item>
+      <el-form-item label="顺风出装" prop="name">
+        <el-select
+          v-model="heroInfo.itemsD"
+          multiple
+          placeholder="请选择装备"
+        >
+          <el-option
+            v-for="item in itemList"
+            :key="item._id"
+            :label="item.name"
+            :value="item._id"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="逆风出装" prop="name">
+        <el-select
+          v-model="heroInfo.itemsU"
+          multiple
+          placeholder="请选择装备"
+        >
+          <el-option
+            v-for="item in itemList"
             :key="item._id"
             :label="item.name"
             :value="item._id"
@@ -46,8 +100,9 @@
   </div>
 </template>
 <script>
-import {addHero, getOneHero, editOneHero } from "@/api/hero";
-import {getCategoryList} from "@/api/category"
+import { addHero, getOneHero, editOneHero } from "@/api/hero";
+import { getCategoryList } from "@/api/category";
+import { getItemList } from "@/api/item";
 export default {
   props: {
     id: {
@@ -56,14 +111,19 @@ export default {
   },
   created() {
     this.id ? this.getOneHero() : "";
-    this.getList();
+    this.getCategoryList();
+    this.getItemList();
   },
   data() {
     return {
       occupationList: [],
+      itemList: [],
       heroInfo: {
         name: "",
         avatar: "",
+        scores: {},
+        itemsD: [],
+        itemsU: [],
       },
       rules: {
         name: [
@@ -101,20 +161,24 @@ export default {
     },
     async getOneHero() {
       let res = await getOneHero(this.id);
-      this.heroInfo = res;
+      // console.log(res);
+      //assign后面的对象覆盖前面的对象
+      this.heroInfo = Object.assign({}, this.heroInfo, res);
     },
     handleAvatarSuccess(res) {
       this.heroInfo.avatar = res.url;
     },
-    async getList() {
+    async getCategoryList() {
       let res = await getCategoryList();
-      this.occupationList = res.filter(item => {
-       return item.parent ? item.parent.name === "职业" : ""
-      })
-    }
+      this.occupationList = res.filter((item) => {
+        return item.parent ? item.parent.name === "职业" : "";
+      });
+    },
+    async getItemList() {
+      let res = await getItemList();
+      this.itemList = res;
+    },
   },
-    TODO
-
 };
 </script>
 <style >
