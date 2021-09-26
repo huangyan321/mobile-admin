@@ -10,6 +10,7 @@ export function getDomain() {
   const i = find(url, ':', 1);
   let domain = url.substr(0, i);
   // domain = process.env.NODE_ENV === 'development' ? "http://121.196.101.73:8888" : "http://127.0.0.1:8888";
-  domain = "http://127.0.0.1:3000"
+  // domain = "http://121.196.101.73:8888/api/private/v1"
+  domain = "http://127.0.0.1:3000/admin/api"
   return domain
 }
