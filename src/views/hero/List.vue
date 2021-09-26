@@ -2,13 +2,13 @@
   <div>
     <!-- 用户列表区域 -->
     <template>
-      <el-table :data="itemList" style="width: 100%" stripe border>
+      <el-table :data="heroList" style="width: 100%" stripe border>
         <el-table-column label="序号" prop="_id" />
         <el-table-column label="物品图标">
         <template slot-scope="scope">
           <div >
             <img
-              :src="scope.row.icon"
+              :src="scope.row.avatar"
               alt=""
               style="width: 50px;height: 50px"
             />
@@ -22,7 +22,7 @@
               type="primary"
               size="mini"
               :loading="loading"
-              @click="$router.push(`/item/edit/${scope.row._id}`)"
+              @click="$router.push(`/hero/edit/${scope.row._id}`)"
             >
               修改
             </el-button>
@@ -41,12 +41,12 @@
   </div>
 </template>
 <script>
-import { getItemList, deleteOneItem } from "@/api/item";
+import { getHeroList, deleteOneHero } from "@/api/hero";
 export default {
-  name: "item",
+  name: "hero",
   data() {
     return {
-      itemList: [],
+      heroList: [],
       loading: false,
     };
   },
@@ -56,8 +56,8 @@ export default {
   mounted() {},
   methods: {
     async getList() {
-      let res = await getItemList();
-      this.itemList = res;
+      let res = await getHeroList();
+      this.heroList = res;
     },
     remove(row) {
       this.loading = true;
@@ -65,7 +65,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
       }).then(async () => {
-        const res = await deleteOneItem(row._id);
+        const res = await deleteOneHero(row._id);
         res.success
           ? (() => {
               this.$notify.success("删除成功");
