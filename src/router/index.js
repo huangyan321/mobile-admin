@@ -188,6 +188,39 @@ export const constantRoutes = [{
       }
     ]
   },
+  {
+    path: '/ad',
+    component: Layout,
+    redirect: '/ad/list',
+    meta: {
+      title: "广告管理",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'adList',
+        component: () => import('@/views/ad/List'),
+        meta: {
+          title: '广告列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'adCreate',
+        component: () => import('@/views/ad/AdEdit'),
+        meta: {
+          title: '添加广告',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'adEdit',
+        component: () => import('@/views/ad/AdEdit'),
+        props: true,
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   {
     path: '*',
