@@ -221,6 +221,39 @@ export const constantRoutes = [{
       }
     ]
   },
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/list',
+    meta: {
+      title: "管理员",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'adminList',
+        component: () => import('@/views/admin/List'),
+        meta: {
+          title: '管理员列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'adminCreate',
+        component: () => import('@/views/admin/AdminEdit'),
+        meta: {
+          title: '添加管理员',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'adminEdit',
+        component: () => import('@/views/admin/AdminEdit'),
+        props: true,
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   {
     path: '*',
