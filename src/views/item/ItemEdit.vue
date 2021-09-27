@@ -47,6 +47,7 @@ export default {
     return {
       itemInfo: {
         name: "",
+        icon: ""
       },
       rules: {
         name: [
@@ -87,7 +88,7 @@ export default {
       this.itemInfo = res;
     },
     handleAvatarSuccess(res) {
-      this.$set(this.itemInfo,icon,res.url)
+      this.$set(this.itemInfo,'icon',res.url)
     }
   },
 };

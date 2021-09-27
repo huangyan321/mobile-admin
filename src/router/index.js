@@ -155,6 +155,39 @@ export const constantRoutes = [{
       }
     ]
   },
+  {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/list',
+    meta: {
+      title: "文章管理",
+      icon: 'form'
+    },
+    children: [{
+        path: 'list',
+        name: 'articleList',
+        component: () => import('@/views/article/List'),
+        meta: {
+          title: '文章列表',
+          icon: 'form'
+        }
+      }, {
+        path: 'edit',
+        name: 'articleCreate',
+        component: () => import('@/views/article/ArticleEdit'),
+        meta: {
+          title: '新建文章',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'articleEdit',
+        component: () => import('@/views/article/ArticleEdit'),
+        props: true,
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   {
     path: '*',

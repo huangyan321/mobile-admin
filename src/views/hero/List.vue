@@ -5,15 +5,15 @@
       <el-table :data="heroList" style="width: 100%" stripe border>
         <el-table-column label="序号" prop="_id" />
         <el-table-column label="英雄头像">
-        <template slot-scope="scope">
-          <div >
-            <img
-              :src="scope.row.avatar"
-              alt=""
-              style="width: 50px;height: 50px"
-            />
-          </div>
-        </template>
+          <template slot-scope="scope">
+            <div>
+              <img
+                :src="scope.row.avatar"
+                alt=""
+                style="width: 50px; height: 50px"
+              />
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="英雄名称" prop="name" />
         <el-table-column label="操作">
@@ -38,6 +38,15 @@
         </el-table-column>
       </el-table>
     </template>
+    <el-pagination
+      :current-page="queryInfo.currPage"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="queryInfo.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 <script>
@@ -48,6 +57,11 @@ export default {
     return {
       heroList: [],
       loading: false,
+      queryInfo: {
+        currPage: 1,
+        pageSize: 10,
+      },
+      total: 0,
     };
   },
   created() {
@@ -56,8 +70,9 @@ export default {
   mounted() {},
   methods: {
     async getList() {
-      let res = await getHeroList();
-      this.heroList = res;
+      let res = await getHeroList(this.queryInfo);
+      this.heroList = res.data;
+      this.total = res.total;
     },
     remove(row) {
       this.loading = true;
@@ -74,6 +89,16 @@ export default {
           : this.$notify.error("删除失败");
       });
       this.loading = false;
+    },
+    // 监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      this.queryInfo.pageSize = newSize;
+      this.getList();
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.currPage = newPage;
+      this.getList();
     },
   },
 };

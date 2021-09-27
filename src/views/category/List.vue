@@ -28,6 +28,15 @@
         </el-table-column>
       </el-table>
     </template>
+    <el-pagination
+      :current-page="queryInfo.currPage"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="queryInfo.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 <script>
@@ -38,6 +47,11 @@ export default {
     return {
       categoryList: [],
       loading: false,
+      queryInfo: {
+        currPage: 1,
+        pageSize: 10,
+      },
+      total: 0,
     };
   },
   created() {
@@ -46,11 +60,12 @@ export default {
   mounted() {},
   methods: {
     async getList() {
-      let res = await getCategoryList();
-      this.categoryList = res;
+      let res = await getCategoryList(this.queryInfo);
+      this.categoryList = res.data;
+      this.total = res.total;
     },
     remove(row) {
-      this.loading = true
+      this.loading = true;
       this.$confirm(`是否确定删除分类${row.name}`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -63,7 +78,17 @@ export default {
             })()
           : this.$notify.error("删除失败");
       });
-      this.loading = false
+      this.loading = false;
+    },
+    // 监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      this.queryInfo.pageSize = newSize;
+      this.getList();
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.currPage = newPage;
+      this.getList();
     },
   },
 };

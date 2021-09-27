@@ -94,7 +94,7 @@ export default {
     },
     async getList() {
       let res = await getCategoryList();
-      this.parentsList = res;
+      this.parentsList = res.data;
     },
   },
 };

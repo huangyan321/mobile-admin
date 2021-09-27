@@ -2,27 +2,16 @@
   <div>
     <!-- 用户列表区域 -->
     <template>
-      <el-table :data="itemList" style="width: 100%" stripe border>
+      <el-table :data="articleList" style="width: 100%" stripe border>
         <el-table-column label="序号" prop="_id" />
-        <el-table-column label="物品图标">
-          <template slot-scope="scope">
-            <div>
-              <img
-                :src="scope.row.icon"
-                alt=""
-                style="width: 50px; height: 50px"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="物品名称" prop="name" />
+        <el-table-column label="标题" prop="title" />
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
               type="primary"
               size="mini"
               :loading="loading"
-              @click="$router.push(`/item/edit/${scope.row._id}`)"
+              @click="$router.push(`/article/edit/${scope.row._id}`)"
             >
               修改
             </el-button>
@@ -50,12 +39,11 @@
   </div>
 </template>
 <script>
-import { getItemList, deleteOneItem } from "@/api/item";
+import { getArticleList, deleteOneArticle } from "@/api/article";
 export default {
-  name: "item",
   data() {
     return {
-      itemList: [],
+      articleList: [],
       loading: false,
       queryInfo: {
         currPage: 1,
@@ -70,8 +58,8 @@ export default {
   mounted() {},
   methods: {
     async getList() {
-      let res = await getItemList(this.queryInfo);
-      this.itemList = res.data;
+      let res = await getArticleList(this.queryInfo);
+      this.articleList = res.data;
       this.total = res.total;
     },
     remove(row) {
@@ -80,7 +68,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
       }).then(async () => {
-        const res = await deleteOneItem(row._id);
+        const res = await deleteOneArticle(row._id);
         res.success
           ? (() => {
               this.$notify.success("删除成功");

@@ -7,10 +7,11 @@ export function addItem(data) {
     data
   })
 }
-export function getItemList() {
+export function getItemList(params) {
   return request({
     url: '/rest/items',
     method: 'get',
+    params
   })
 }
 export function getOneItem(id) {
@@ -19,7 +20,7 @@ export function getOneItem(id) {
     method: 'get',
   })
 }
-export function editOneItem(id,data) {
+export function editOneItem(id, data) {
   return request({
     url: `/rest/items/${id}`,
     method: 'put',

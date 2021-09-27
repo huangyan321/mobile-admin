@@ -7,10 +7,11 @@ export function addHero(data) {
     data
   })
 }
-export function getHeroList() {
+export function getHeroList(params) {
   return request({
     url: '/rest/heroes',
     method: 'get',
+    params
   })
 }
 export function getOneHero(id) {
@@ -19,7 +20,7 @@ export function getOneHero(id) {
     method: 'get',
   })
 }
-export function editOneHero(id,data) {
+export function editOneHero(id, data) {
   return request({
     url: `/rest/heroes/${id}`,
     method: 'put',

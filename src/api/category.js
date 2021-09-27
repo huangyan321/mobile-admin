@@ -7,10 +7,11 @@ export function addCategory(data) {
     data
   })
 }
-export function getCategoryList() {
+export function getCategoryList(params) {
   return request({
     url: '/rest/categories',
     method: 'get',
+    params
   })
 }
 export function getOneCategory(id) {
