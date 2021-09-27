@@ -64,12 +64,12 @@ export default {
             };
             //aixo的声明在全局main.js中，这里不粘贴了
             this.$http
-              .post(`http://localhost/hx/upload.php`, params, config)
+              .post(`http://localhost/admin/api/upload`, params, config)
               .then((res) => {
                 console.log(res.data.up);
                 // success(res.data.up);
                 if (res.data.up != "") {
-                  success("http://localhost/hx/" + res.data.up); //上传成功，在成功函数里填入图片路径
+                  success("http://localhost/static/" + res.data.up); //上传成功，在成功函数里填入图片路径
                 } else {
                   failure("上传失败");
                 }
