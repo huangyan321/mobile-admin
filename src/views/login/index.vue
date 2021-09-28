@@ -1,5 +1,11 @@
 <template>
   <div class="login-container">
+    <figure class="container">
+      <div class="sun"></div>
+      <div class="earth">
+        <div class="moon"></div>
+      </div>
+    </figure>
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -54,8 +60,14 @@
           type="primary"
           style="margin-bottom: 30px"
           @click.native.prevent="handleLogin"
-        >登录</el-button>
-        <el-button type="info" style="margin-bottom: 30px" @click="loginFormReset">重置</el-button>
+          >登录</el-button
+        >
+        <el-button
+          type="info"
+          style="margin-bottom: 30px"
+          @click="loginFormReset"
+          >重置</el-button
+        >
       </el-row>
 
       <div class="tips">
@@ -64,11 +76,9 @@
       </div>
     </el-form>
     <div class="footer">
-      <a
-        href="http://beian.miit.gov.cn/"
-        target="_blank"
-        style="color: #a6a9ad"
-      >闽ICP备2021008516号-1</a>
+      <a href="http://beian.miit.gov.cn/" target="_blank" style="color: #a6a9ad"
+        >闽ICP备2021008516号-1</a
+      >
     </div>
   </div>
 </template>
@@ -86,8 +96,8 @@ export default {
       //   callback();
       // }
       if (value.trim().length === 0) {
-        callback(new Error("请输入你的大名"))
-      } else (callback())
+        callback(new Error("请输入你的大名"));
+      } else callback();
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -116,7 +126,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
@@ -124,7 +134,7 @@ export default {
   },
   methods: {
     loginFormReset() {
-      this.$refs.loginForm.resetFields()
+      this.$refs.loginForm.resetFields();
     },
     showPwd() {
       if (this.passwordType === "password") {
@@ -166,7 +176,8 @@ export default {
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
-
+@import url("~@/styles/simulation.css");
+  
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
