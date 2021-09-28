@@ -12,13 +12,17 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import request from '@/utils/request'
 import 'default-passive-events'
+import {
+  getToken
+} from '@/utils/auth' // get token from cookie
+
 Vue.prototype.$http = request
 // 在页面刷新时将store中的数据保存到sessionStorage中
-window.addEventListener("beforeunload",() => {
+window.addEventListener("beforeunload", () => {
   const userInfo = {
     ...store.state.user
   }
-  window.sessionStorage.setItem("USER_INFO",JSON.stringify(userInfo));
+  window.sessionStorage.setItem("USER_INFO", JSON.stringify(userInfo));
 })
 Vue.prototype.$_ = lodash
 // 在页面刷新后获取sessionStorage中的token
@@ -29,7 +33,16 @@ if (userInfo) {
   store.commit('user/SET_NAME', user.name);
 }
 Vue.config.productionTip = false;
-
+//混入提供upload组件token校验
+Vue.mixin({
+  methods: {
+    getHeaders() {
+      return {
+        Authorization: getToken()
+      }
+    }
+  }
+})
 new Vue({
   el: '#app',
   router,
